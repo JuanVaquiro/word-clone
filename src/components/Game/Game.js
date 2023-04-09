@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 import KeepingTrackGuesses from '../KeepingTrack';
 import InputWrapper from '../InputWrapper';
+import HappyBanner from '../HappyBanner/HappyBanner';
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
 
@@ -12,18 +13,21 @@ console.info({ answer });
 function Game() {
   const [guess, setGuess] = useState([])
   const handleGuess = (text) => {
-    const inputText = {
-      guess: text,
-      id: Math.random()
-    }
+    const inputText = text
     const inputsTrys = [...guess, inputText]
     setGuess(inputsTrys)
   }
+
+  const statusWin = guess === answer
   console.log(guess)
+  console.log(answer)
+  console.log(statusWin)
+
   return (
     <Fragment>
-      <KeepingTrackGuesses guess={guess} />
+      <KeepingTrackGuesses guess={guess} answer={answer} />
       <InputWrapper handleGuess={handleGuess} />
+      {statusWin && <HappyBanner numGusses={guess.length} />}
     </Fragment>
   )
 }
